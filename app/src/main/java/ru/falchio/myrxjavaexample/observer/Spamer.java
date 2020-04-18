@@ -4,7 +4,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-public class Spamer implements Observable {
+public class Spamer implements Observable<String> {
     private String TAG = this.getClass().getSimpleName();
     private ArrayList<Observer> subscribers;
     private String name;
