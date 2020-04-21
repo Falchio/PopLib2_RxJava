@@ -4,13 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import ru.falchio.myrxjavaexample.R;
@@ -21,6 +19,8 @@ public class RxJavaActivity extends AppCompatActivity {
     private RxJavaPresenter presenter;
     private Observable<String> observable;
     private Disposable disposable;
+    private Disposable singleDisposable;
+    private Single<String> stringSingle;
 //    @BindView(R.id.subscribe)
 //    Button subscribe;
 //    @BindView(R.id.unsubscribe)
@@ -33,6 +33,7 @@ public class RxJavaActivity extends AppCompatActivity {
 
         presenter = new RxJavaPresenter();
         observable = presenter.sendMessage();
+        stringSingle = presenter.sendSingleMessage();
         ButterKnife.bind(this);
 
 //        subscribe.setOnClickListener(v -> subscribe());
@@ -46,6 +47,13 @@ public class RxJavaActivity extends AppCompatActivity {
                 throwable -> Log.e(TAG, "onError"),
                 () -> Log.d(TAG, "onComplete: "));
         Log.d(TAG, "subscribe: end " + Thread.currentThread().getName());
+    }
+
+    @OnClick(R.id.single)
+    public void single(){
+        singleDisposable=stringSingle.observeOn(AndroidSchedulers.mainThread()).subscribe(
+                s -> Log.d(TAG, "single: " + s),
+                throwable -> Log.e(TAG, "single: ", throwable ));
     }
 
     @OnClick(R.id.unsubscribe)
