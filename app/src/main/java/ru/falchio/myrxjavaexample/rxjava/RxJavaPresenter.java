@@ -5,8 +5,9 @@ import android.util.Log;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Single;
+import io.reactivex.SingleOnSubscribe;
 import io.reactivex.schedulers.Schedulers;
 
 public class RxJavaPresenter {
@@ -48,6 +49,16 @@ public class RxJavaPresenter {
 //            }
 //        }).subscribeOn(Schedulers.io());
 
+
+    }
+
+    public Single<String> sendSingleMessage(){
+        Single<String> stringSingle = Single.create((SingleOnSubscribe<String>) emitter -> {
+            String msg = "Message";
+            Log.d(TAG, "sendSingleMessage: " + msg);
+            emitter.onSuccess(msg);
+        }).subscribeOn(Schedulers.io());
+        return stringSingle;
     }
 
 

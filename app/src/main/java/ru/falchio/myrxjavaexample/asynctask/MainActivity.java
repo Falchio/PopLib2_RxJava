@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 
 import java.util.concurrent.TimeUnit;
@@ -23,13 +22,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         button = findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myAsyncTask=new MyAsyncTask();
-                myAsyncTask.execute();
-                Log.d(TAG, "onClick:  завершен");
-            }
+        button.setOnClickListener(v -> {
+            myAsyncTask=new MyAsyncTask();
+            myAsyncTask.execute();
+            Log.d(TAG, "onClick:  завершен");
         });
     }
 
